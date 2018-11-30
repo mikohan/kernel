@@ -1,7 +1,9 @@
 import pprint
 import MySQLdb as MyCl
 
-p = pprint.pprint;
+p = pprint.pprint
+
+table = "names_all"
 
 
 keyPlus = input("Введите ключевые слова через запятую:").split(",")
@@ -31,9 +33,9 @@ def getSearch(cursor,keyPlus,keyMinus =[]):
 
 
         if len(keyPlus) == 1:
-            q = "SELECT ang_name FROM angara WHERE ang_name LIKE %s"
+            q = "SELECT ang_name FROM " + table + " WHERE ang_name LIKE %s"
         else:
-            q = "SELECT ang_name FROM angara WHERE (ang_name LIKE %s"
+            q = "SELECT ang_name FROM " + table + " WHERE (ang_name LIKE %s"
         iterable = iter(keyPlus)
         next(iterable)
         for plus in iterable:

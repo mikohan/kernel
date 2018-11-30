@@ -1,7 +1,7 @@
 import pprint
 import MySQLdb as MyCl
 
-p = pprint.pprint;
+p = pprint.pprint
 
 
 keyPlus = input("Введите ключевые слова через запятую:").split(",")
