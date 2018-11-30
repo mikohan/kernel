@@ -31,14 +31,14 @@ def getSearch(cursor,keyPlus,keyMinus =[]):
 
 
         if len(keyPlus) == 1:
-            q = "SELECT kernel_keyword, chastot FROM kernel_keyword WHERE kernel_keyword LIKE %s"
+            q = "SELECT ang_name FROM angara WHERE ang_name LIKE %s"
         else:
-            q = "SELECT kernel_keyword, chastot FROM kernel_keyword WHERE (kernel_keyword LIKE %s"
+            q = "SELECT ang_name FROM angara WHERE (ang_name LIKE %s"
         iterable = iter(keyPlus)
         next(iterable)
         for plus in iterable:
 
-            an = " OR kernel_keyword LIKE %s"
+            an = " OR ang_name LIKE %s"
 
             q += an
         if len(keyPlus) != 1:
@@ -50,15 +50,15 @@ def getSearch(cursor,keyPlus,keyMinus =[]):
         else:
             if keyMinus[0] !="":
                 if len(keyMinus) == 1:
-                    mq = " AND kernel_keyword NOT LIKE %s"
+                    mq = " AND ang_name NOT LIKE %s"
                 else:
-                    mq =" AND (kernel_keyword NOT LIKE %s"
+                    mq =" AND (ang_name NOT LIKE %s"
 
                 it = iter(keyMinus)
                 next(it)
                 for minus in it:
 
-                    mn = " AND kernel_keyword NOT LIKE %s"
+                    mn = " AND ang_name NOT LIKE %s"
                     mq += mn
                 if len(keyMinus) != 1:
                     mq = mq + ")"
