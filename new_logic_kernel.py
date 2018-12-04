@@ -52,7 +52,6 @@ if len(superPlus) == 1 and keyMinus[0] != '':
         an = " AND " + field_name + " LIKE %s"
         q += an
     q = q + ')'
-    q = q + " ORDER BY " + field_name + " ASC"
     for m in range(0,len(keyMinus)):
         if m == 0:
             mn = " AND (" + field_name + " NOT LIKE %s"
