@@ -13,7 +13,6 @@ superPlus = []
 for i in range(0,len(keyPlus)):
     key_each = keyPlus[i].split(' ')
     superPlus.append(key_each)
-#p(superPlus)
 
 
 keyMinus = input("Введите минус слова через запятую:").split(",")
@@ -38,10 +37,8 @@ if len(superPlus) == 1 and keyMinus[0] =='':
     for s_one in range(1,len(superPlus[0])):
         an = " AND ang_name LIKE %s"
         q += an
-    #print(q,addPercent(superPlus[0]))
     cursor.execute(q,addPercent(superPlus[0]))
     bigQuery = p(cursor.fetchall())
-    p(bigQuery)
     print("Строк соответсвует запросу:" + str(cursor.rowcount))
 
 #Если есть одна фраза и минус слова
@@ -60,10 +57,8 @@ if len(superPlus) == 1 and len(keyMinus) >= 1:
         q += mn
     q = q + ')'
     args = addPercent(superPlus[0]) + addPercent(keyMinus)
-    print(q,args)
     cursor.execute(q,args)
     bigQuery = p(cursor.fetchall())
-    p(bigQuery)
     print("Строк соответсвует запросу:" + str(cursor.rowcount))
 
 
@@ -82,17 +77,13 @@ if len(superPlus) > 1 and keyMinus[0] != '':
                 an += " ang_name LIKE %s"
             else:
                 an += " ang_name LIKE %s AND "
-    #p(an.replace("AND", "", 1))
         if len(superPlus) == prase +1:
             an = an + ")"
         else:
             an = an + ") OR ("
-    #p(an)
 
     q = q + an
     q = q + ')'
-    #p(q)
-    #p(superPlus)
     q = q + " AND ("
     mq = ''
     for minus in range(0,len(keyMinus)):
@@ -102,7 +93,6 @@ if len(superPlus) > 1 and keyMinus[0] != '':
             mq += " AND ang_name NOT LIKE %s"
 
     q = q + mq + ")"
-    print(q)
 
     newList = []
     for keyArray in range(0,len(superPlus)):
@@ -112,12 +102,10 @@ if len(superPlus) > 1 and keyMinus[0] != '':
     for nms in range(0,len(keyMinus)):
         newList.append(keyMinus[nms])
     args = addPercent(newList)
-    p(newList)
 
 
     cursor.execute(q,args)
     bigQuery = p(cursor.fetchall())
-    p(bigQuery)
     print("Строк соответсвует запросу:" + str(cursor.rowcount))
 
 #Если есть несколько слов плюс но нет минус слов
@@ -127,7 +115,6 @@ if len(superPlus) > 1 and keyMinus[0] == '':
     q = "SELECT ang_name FROM " + table + " WHERE (("
     an = ''
     for prase in range(0,len(superPlus)):
-        #p(prase)
 
         for plus in range(0,len(superPlus[prase])):
             num = plus+1
@@ -135,19 +122,13 @@ if len(superPlus) > 1 and keyMinus[0] == '':
                 an += " ang_name LIKE %s"
             else:
                 an += " ang_name LIKE %s AND "
-    #p(an.replace("AND", "", 1))
         if len(superPlus) == prase +1:
             an = an + ")"
         else:
             an = an + ") OR ("
-    #p(an)
 
     q = q + an
     q = q + ')'
-    #p(q)
-    #p(superPlus)
-
-    print(q)
 
     newList = []
     for keyArray in range(0,len(superPlus)):
@@ -156,12 +137,11 @@ if len(superPlus) > 1 and keyMinus[0] == '':
 
 
     args = addPercent(newList)
-    p(args)
+
 
 
     cursor.execute(q,args)
     bigQuery = p(cursor.fetchall())
-    p(bigQuery)
     print("Строк соответсвует запросу:" + str(cursor.rowcount))
 
 
