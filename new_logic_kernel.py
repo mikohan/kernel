@@ -3,7 +3,7 @@ import MySQLdb as MyCl
 
 p = pprint.pprint
 
-table = "kernel_keyword"
+table = "kernel_keyword_big"
 field_name = "kernel_keyword"
 
 
@@ -14,7 +14,6 @@ superPlus = []
 for i in range(0,len(keyPlus)):
     key_each = keyPlus[i].split(' ')
     superPlus.append(key_each)
-#p(superPlus)
 
 
 keyMinus = input("Введите минус слова через запятую:").split(",")
@@ -39,6 +38,7 @@ if len(superPlus) == 1 and keyMinus[0] =='':
     for s_one in range(1,len(superPlus[0])):
         an = " AND " + field_name + " LIKE %s"
         q += an
+    q = q + " ORDER BY " + field_name + " ASC"
     cursor.execute(q,addPercent(superPlus[0]))
     bigQuery = p(cursor.fetchall())
     p(bigQuery)
@@ -52,6 +52,7 @@ if len(superPlus) == 1 and keyMinus[0] != '':
         an = " AND " + field_name + " LIKE %s"
         q += an
     q = q + ')'
+    q = q + " ORDER BY " + field_name + " ASC"
     for m in range(0,len(keyMinus)):
         if m == 0:
             mn = " AND (" + field_name + " NOT LIKE %s"
@@ -59,6 +60,7 @@ if len(superPlus) == 1 and keyMinus[0] != '':
             mn = " AND " + field_name + " NOT LIKE %s"
         q += mn
     q = q + ')'
+    q = q + " ORDER BY " + field_name + " ASC"
     args = addPercent(superPlus[0]) + addPercent(keyMinus)
     print(q,args)
     cursor.execute(q,args)
@@ -74,21 +76,16 @@ if len(superPlus) > 1 and keyMinus[0] != '':
     q = "SELECT " + field_name + ", chastot FROM " + table + " WHERE (("
     an = ''
     for prase in range(0,len(superPlus)):
-        #p(prase)
-
         for plus in range(0,len(superPlus[prase])):
             num = plus+1
             if len(superPlus[prase]) == num:
                 an += " " + field_name + " LIKE %s"
             else:
                 an += " " + field_name + " LIKE %s AND "
-    #p(an.replace("AND", "", 1))
         if len(superPlus) == prase +1:
             an = an + ")"
         else:
             an = an + ") OR ("
-    #p(an)
-
     q = q + an
     q = q + ')'
     #p(q)
@@ -102,6 +99,7 @@ if len(superPlus) > 1 and keyMinus[0] != '':
             mq += " AND " + field_name + " NOT LIKE %s"
 
     q = q + mq + ")"
+    q = q + " ORDER BY " + field_name + " ASC"
     print(q)
 
     newList = []
@@ -144,9 +142,7 @@ if len(superPlus) > 1 and keyMinus[0] == '':
 
     q = q + an
     q = q + ')'
-    #p(q)
-    #p(superPlus)
-
+    q = q + " ORDER BY " + field_name + " ASC"
     print(q)
 
     newList = []
