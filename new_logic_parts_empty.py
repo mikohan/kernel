@@ -3,9 +3,10 @@ import MySQLdb as MyCl
 
 p = pprint.pprint
 
-table = "names_all_back"
-
-
+table = "names_all_nocat"
+print('='*80)
+p("НАХОДИТЕСЬ В НЕ КАТЕГОРИЗИРОВАННОЙ ТАБЛИЦЕ")
+print('='*80)
 keyPlus = input("Введите ключевые фразы или слова, через запятую:").split(",")
 keyPlus = list(map(str.strip, keyPlus))
 
