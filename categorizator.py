@@ -1,13 +1,18 @@
 import pprint
 import MySQLdb
 import os
+import time
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 p = pprint.pprint
-
-
-
-
-
 
 db = MySQLdb.connect('localhost', 'root', 'manhee33338', 'test')
 db.set_character_set('utf8')
@@ -16,7 +21,13 @@ cursor = db.cursor()
 
 #название таблицы в Mysql
 #table = "porter_test_progon"
-table = "names_all"
+print("="*80)
+table = input(bcolors.WARNING + "Введите название таблицы MySql с которой работаем:" + bcolors.OKBLUE + bcolors.BOLD + "[kernel_porter]").strip()
+table = table or 'kernel_porter'
+
+print("="*80)
+print(bcolors.OKBLUE + bcolors.BOLD + "Работаем с таблицей:" + table)
+print("="*80)
 dictTable = "dict"
 
 
@@ -185,9 +196,14 @@ def clearTable():
 def mysqlInsert(row,id):
     q = "UPDATE " + table + " SET category_id = %s, category_name = %s, subcat_id = CONCAT(subcat_id,%s), subcat_name = CONCAT(subcat_name,%s), group_id = CONCAT(group_id,%s),group_name = CONCAT(group_name, %s) WHERE id =%s;"
     param = [row[1],row[2], ',' + row[3], ',' + row[4],',' + row[7], ',' + row[8],id]
+    print(bcolors.OKGREEN)
     print(param)
     cursor.execute(q,param)
     db.commit()
+
+
+#Задержка для красоты
+time.sleep(3)
 
 #Очищаем таблицу от старого присваивания субкатегорий и групп
 
